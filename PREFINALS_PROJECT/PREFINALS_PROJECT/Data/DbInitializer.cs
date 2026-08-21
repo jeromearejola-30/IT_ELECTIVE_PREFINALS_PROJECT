@@ -6,25 +6,32 @@ namespace PREFINALS_PROJECT.Data
     {
         public static void Initialize(AppDbContext context)
         {
+            // Creates the database and all tables if they do not exist
             context.Database.EnsureCreated();
 
-            if (context.Tickets.Any()) return; // DB seeded
-
-            var depts = new Department[]
+            // Seed Departments
+            if (!context.Departments.Any())
             {
-                new Department { Name = "IT Support", Description = "Handles software and network issues" },
-                new Department { Name = "Hardware", Description = "Manages physical infrastructure" }
-            };
-            context.Departments.AddRange(depts);
-            context.SaveChanges();
+                var depts = new Department[]
+                {
+                    new Department { Name = "IT Support", Description = "Handles technical issues" },
+                    new Department { Name = "Customer Success", Description = "Handles client onboarding" }
+                };
+                context.Departments.AddRange(depts);
+                context.SaveChanges();
+            }
 
-            var tickets = new Ticket[]
+            // Seed Tickets
+            if (!context.Tickets.Any())
             {
-                new Ticket { Title = "VPN Disconnects", Description = "Remote connection drops frequently", Priority = "High", Status = "Open" },
-                new Ticket { Title = "Monitor Flicker", Description = "Secondary monitor flickers on startup", Priority = "Low", Status = "Open" }
-            };
-            context.Tickets.AddRange(tickets);
-            context.SaveChanges();
+                var tickets = new Ticket[]
+                {
+                    new Ticket { Title = "System Access Issue", Description = "User cannot log in", Priority = "High", Status = "Open" },
+                    new Ticket { Title = "Printer Connectivity", Description = "Office printer offline", Priority = "Low", Status = "Open" }
+                };
+                context.Tickets.AddRange(tickets);
+                context.SaveChanges();
+            }
         }
     }
 }
