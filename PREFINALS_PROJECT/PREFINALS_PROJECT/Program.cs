@@ -12,11 +12,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-// Automatically create database and apply schema
+// Automatically create database and apply schema + seed data
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     context.Database.EnsureCreated();
+    DbInitializer.Initialize(context); // <--- Added here
 }
 
 // Configure the HTTP request pipeline.
