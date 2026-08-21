@@ -13,3 +13,6 @@ An ASP.NET Core MVC application built using Entity Framework Core and an existin
 1. Clone the repository:
    ```bash
    git clone <repository-url>
+
+## jpacaonces branch
+added empty states, search, and layout
