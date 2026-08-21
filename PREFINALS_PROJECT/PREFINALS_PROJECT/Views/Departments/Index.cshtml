@@ -6,32 +6,41 @@
 
 <h2 class="mb-4">Department Directory</h2>
 
-<div class="row">
-    @foreach (var dept in Model)
-    {
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-dark text-white">
-                    <h5 class="card-title mb-0">@dept.Name</h5>
-                </div>
-                <div class="card-body">
-                    <p class="card-text text-muted">@dept.Description</p>
-                    <h6>Assigned Employees:</h6>
-                    @if (dept.Employees != null && dept.Employees.Any())
-                    {
-                        <ul class="list-group list-group-flush">
-                            @foreach (var emp in dept.Employees)
-                            {
-                                <li class="list-group-item ps-0">@emp.FullName</li>
-                            }
-                        </ul>
-                    }
-                    else
-                    {
-                        <p class="text-muted fst-italic">No employees assigned.</p>
-                    }
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info mt-3" role="alert">
+        No records found. Click create to add a new entry!
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var dept in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="card-title mb-0">@dept.Name</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text text-muted">@dept.Description</p>
+                        <h6>Assigned Employees:</h6>
+                        @if (dept.Employees != null && dept.Employees.Any())
+                        {
+                            <ul class="list-group list-group-flush">
+                                @foreach (var emp in dept.Employees)
+                                {
+                                    <li class="list-group-item ps-0">@emp.FullName</li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted fst-italic">No employees assigned.</p>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}
