@@ -15,31 +15,41 @@
         </div>
     </form>
 
-    <table class="table table-hover table-bordered align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Job Title</th>
-                <th>Department</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var emp in Model)
-            {
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning border-0 shadow-sm" role="alert">
+            <h5 class="alert-heading">No Employees Found</h5>
+            <p class="mb-0">No matching employee records were found for your query.</p>
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-dark">
                 <tr>
-                    <td><strong>@emp.FullName</strong></td>
-                    <td>@emp.Email</td>
-                    <td>@emp.JobTitle</td>
-                    <td>@(emp.Department?.Name ?? "N/A")</td>
-                    <td>
-                        <span class="badge @(emp.IsActive ? "bg-success" : "bg-danger")">
-                            @(emp.IsActive ? "Active" : "Inactive")
-                        </span>
-                    </td>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Job Title</th>
+                    <th>Department</th>
+                    <th>Status</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var emp in Model)
+                {
+                    <tr>
+                        <td><strong>@emp.FullName</strong></td>
+                        <td>@emp.Email</td>
+                        <td>@emp.JobTitle</td>
+                        <td>@(emp.Department?.Name ?? "N/A")</td>
+                        <td>
+                            <span class="badge @(emp.IsActive ? "bg-success" : "bg-danger")">
+                                @(emp.IsActive ? "Active" : "Inactive")
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>

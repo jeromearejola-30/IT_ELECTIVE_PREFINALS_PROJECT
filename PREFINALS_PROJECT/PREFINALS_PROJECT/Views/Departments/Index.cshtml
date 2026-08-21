@@ -5,52 +5,41 @@
 }
 
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Departments Overview</h2>
-    </div>
+    <h2 class="mb-4">Departments Overview</h2>
 
-    <div class="row mb-4">
-        <div class="col-md-6">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Total Departments</h5>
-                    <p class="card-text fs-3">@Model.Count()</p>
-                </div>
-            </div>
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info border-0 shadow-sm" role="alert">
+            <h5 class="alert-heading">No Departments Found</h5>
+            <p class="mb-0">There are currently no departments available in the system.</p>
         </div>
-        <div class="col-md-6">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Active Departments</h5>
-                    <p class="card-text fs-3">@Model.Count(d => d.IsActive)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <table class="table table-striped table-hover table-bordered align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>Department Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Employee Count</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var dept in Model)
-            {
+    }
+    else
+    {
+        <table class="table table-striped table-hover table-bordered align-middle">
+            <thead class="table-dark">
                 <tr>
-                    <td><strong>@dept.Name</strong></td>
-                    <td>@(dept.Description ?? "N/A")</td>
-                    <td>
-                        <span class="badge @(dept.IsActive ? "bg-success" : "bg-secondary")">
-                            @(dept.IsActive ? "Active" : "Inactive")
-                        </span>
-                    </td>
-                    <td>@dept.EmployeeCount</td>
+                    <th>Department Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Employee Count</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var dept in Model)
+                {
+                    <tr>
+                        <td><strong>@dept.Name</strong></td>
+                        <td>@(dept.Description ?? "N/A")</td>
+                        <td>
+                            <span class="badge @(dept.IsActive ? "bg-success" : "bg-secondary")">
+                                @(dept.IsActive ? "Active" : "Inactive")
+                            </span>
+                        </td>
+                        <td>@dept.EmployeeCount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>
