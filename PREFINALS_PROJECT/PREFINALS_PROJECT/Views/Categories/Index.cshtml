@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PREFINALS_PROJECT.Models.Category>
+
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+
+<div class="container mt-4">
+    <h2 class="mb-4">Category Directory</h2>
+
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            No categories found.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var parent in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">@parent.Name</h5>
+                        </div>
+                        <div class="card-body">
+                            @if (parent.SubCategories != null && parent.SubCategories.Any())
+                            {
+                                <h6 class="text-muted mb-2">Subcategories:</h6>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var sub in parent.SubCategories)
+                                    {
+                                        <span class="badge bg-secondary fs-6">@sub.Name</span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="text-muted fst-italic mb-0">No subcategories available.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
