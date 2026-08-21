@@ -13,13 +13,23 @@ namespace PREFINALS_PROJECT.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var employees = await _context.Employees
-                .Include(e => e.Department)
-                .ToListAsync();
+            ViewData["CurrentFilter"] = searchString;
 
-            return View(employees);
+            var employees = _context.Employees
+                .Include(e => e.Department)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+                employees = employees.Where(e =>
+                    e.FirstName.ToLower().Contains(searchString) ||
+                    e.LastName.ToLower().Contains(searchString));
+            }
+
+            return View(await employees.ToListAsync());
         }
     }
 }
