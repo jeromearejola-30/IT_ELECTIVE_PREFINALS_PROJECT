@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PREFINALS_PROJECT.Data;
-using PREFINALS_PROJECT.Models;
 
 namespace PREFINALS_PROJECT.Controllers
 {
@@ -19,7 +18,7 @@ namespace PREFINALS_PROJECT.Controllers
             ViewData["CurrentSearch"] = searchString;
             ViewData["CurrentPriority"] = priorityFilter;
 
-            IQueryable<Ticket> tickets = _context.Tickets;
+            var tickets = from t in _context.Tickets select t;
 
             if (!string.IsNullOrEmpty(searchString))
             {
