@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PREFINALS_PROJECT.Models
 {
-    [Table("Employees")]
     public class Employee
     {
         [Key]
@@ -11,28 +10,15 @@ namespace PREFINALS_PROJECT.Models
 
         [Required]
         [StringLength(100)]
-        public string FirstName { get; set; } = string.Empty;
-
-        [Required]
-        [StringLength(100)]
-        public string LastName { get; set; } = string.Empty;
-
-        [NotMapped]
-        public string FullName => $"{FirstName} {LastName}";
+        public string FullName { get; set; } = string.Empty;
 
         [Required]
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
 
-        [Required]
-        public string JobTitle { get; set; } = string.Empty;
-
-        public bool IsActive { get; set; }
-
-        [Required]
         public int DepartmentId { get; set; }
 
-        [ForeignKey(nameof(DepartmentId))]
-        public Department Department { get; set; } = null!;
+        [ForeignKey("DepartmentId")]
+        public Department? Department { get; set; }
     }
 }
