@@ -11,4 +11,10 @@
     <Folder Include="Views\Reports\" />
   </ItemGroup>
 
+	<ItemGroup>
+		<None Update="lycevm.db">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 </Project>
