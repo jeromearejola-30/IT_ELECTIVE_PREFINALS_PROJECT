@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<PREFINALS_PROJECT.Models.Ticket>
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Tickets";
+}
 
 <h2 class="mb-3">Support Tickets</h2>
 
@@ -22,3 +25,69 @@
         <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
     </div>
 </form>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info mt-3" role="alert">
+        No ticket records found. Click create to add a new entry!
+    </div>
+}
+else
+{
+    <table class="table table-striped table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Priority</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Description</td>
+                    <td>
+                        @switch (item.Status)
+                        {
+                            case "Open":
+                                <span class="badge bg-warning text-dark">Open</span>
+                                break;
+                            case "In Progress":
+                                <span class="badge bg-info text-dark">In Progress</span>
+                                break;
+                            case "Resolved":
+                                <span class="badge bg-success">Resolved</span>
+                                break;
+                            case "Closed":
+                                <span class="badge bg-secondary">Closed</span>
+                                break;
+                            default:
+                                <span class="badge bg-light text-dark">@item.Status</span>
+                                break;
+                        }
+                    </td>
+                    <td>
+                        @switch (item.Priority)
+                        {
+                            case "Critical":
+                                <span class="badge bg-danger">Critical</span>
+                                break;
+                            case "High":
+                                <span class="badge bg-warning text-dark">High</span>
+                                break;
+                            case "Medium":
+                                <span class="badge bg-primary">Medium</span>
+                                break;
+                            default:
+                                <span class="badge bg-secondary">Low</span>
+                                break;
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
