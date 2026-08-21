@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PREFINALS_PROJECT.Data; // Ensure this matches Member 2's DbContext namespace
+using PREFINALS_PROJECT.Data;
 
 namespace PREFINALS_PROJECT.Controllers
 {
@@ -16,13 +16,8 @@ namespace PREFINALS_PROJECT.Controllers
         public async Task<IActionResult> Index()
         {
             var departments = await _context.Departments
-                .Select(d => new
-                {
-                    d.Name,
-                    d.Description,
-                    d.IsActive,
-                    EmployeeCount = d.Employees.Count
-                })
+                .Include(d => d.Employees)
+                .AsNoTracking()
                 .ToListAsync();
 
             return View(departments);
